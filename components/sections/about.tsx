@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,11 +16,86 @@ const paragraphs = [
 ];
 
 const stats = [
-  { value: "5+", label: "Yillik tajriba" },
-  { value: "50+", label: "Loyihalar" },
-  { value: "30+", label: "Mijozlar" },
-  { value: "99%", label: "Mamnunlik" },
+  { value: 3, suffix: "+", label: "Yillik tajriba" },
+  { value: 50, suffix: "+", label: "Loyihalar" },
+  { value: 30, suffix: "+", label: "Mijozlar" },
+  { value: 99, suffix: "%", label: "Mamnunlik" },
 ];
+
+// Counter component with hover blur effect
+function AnimatedStat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+  const [count, setCount] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const statRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          // Animate counter
+          let start = 0;
+          const end = value;
+          const duration = 2000;
+          const increment = end / (duration / 16);
+
+          const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+              setCount(end);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(start));
+            }
+          }, 16);
+
+          return () => clearInterval(timer);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (statRef.current) {
+      observer.observe(statRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [value, hasAnimated]);
+
+  return (
+    <div
+      ref={statRef}
+      className="stat-item group relative text-center cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Background blur number */}
+      <div
+        className={`absolute inset-0 flex items-center justify-center transition-all duration-500 pointer-events-none ${
+          isHovered ? "opacity-100 scale-150" : "opacity-0 scale-100"
+        }`}
+      >
+        <span className="text-8xl sm:text-9xl font-bold text-emerald-500/20 blur-sm select-none">
+          {count}{suffix}
+        </span>
+      </div>
+
+      {/* Main number */}
+      <div className="relative z-10">
+        <p
+          className={`text-4xl font-bold text-white sm:text-5xl md:text-6xl transition-all duration-300 ${
+            isHovered ? "text-emerald-400 scale-110" : ""
+          }`}
+        >
+          {count}
+          <span className="text-emerald-400">{suffix}</span>
+        </p>
+        <p className="mt-2 text-sm text-zinc-500">{label}</p>
+      </div>
+    </div>
+  );
+}
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -122,12 +197,12 @@ export function About() {
           className="grid grid-cols-2 gap-8 border-t border-zinc-800 pt-16 md:grid-cols-4"
         >
           {stats.map((stat) => (
-            <div key={stat.label} className="stat-item text-center">
-              <p className="glow-text text-4xl font-bold text-white sm:text-5xl md:text-6xl">
-                {stat.value}
-              </p>
-              <p className="mt-2 text-sm text-zinc-500">{stat.label}</p>
-            </div>
+            <AnimatedStat
+              key={stat.label}
+              value={stat.value}
+              suffix={stat.suffix}
+              label={stat.label}
+            />
           ))}
         </div>
       </div>

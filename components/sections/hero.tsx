@@ -66,7 +66,7 @@ function GradientRing() {
         <div className="absolute inset-16 rounded-full border border-white/5 animate-spin-slow" style={{ animationDuration: "30s" }} />
 
         {/* Gradient glow */}
-        <div className="absolute inset-0 rounded-full bg-linear-to-r from-violet-500/10 via-transparent to-cyan-500/10 blur-3xl animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-linear-to-r from-emerald-500/10 via-transparent to-zinc-500/10 blur-3xl animate-pulse" />
       </div>
     </div>
   );
@@ -164,7 +164,7 @@ export function Hero() {
       {text.split("").map((char, index) => (
         <span
           key={index}
-          className="char inline-block transition-all duration-300 hover:text-violet-400 hover:-translate-y-1"
+          className="char inline-block transition-all duration-300 hover:text-emerald-400 hover:-translate-y-1"
           aria-hidden="true"
           style={{ transformOrigin: "bottom" }}
         >
@@ -187,15 +187,15 @@ export function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-4 sm:px-6 selection:bg-violet-500/30"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-zinc-950 px-4 sm:px-6 selection:bg-emerald-500/30"
     >
       {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-linear-to-b from-violet-950/20 via-black to-black" />
+      <div className="absolute inset-0 bg-linear-to-b from-zinc-900/50 via-zinc-950 to-zinc-950" />
 
       {/* Gradient orbs */}
-      <div className="absolute left-0 top-0 h-125 w-125 rounded-full bg-violet-600/20 blur-[150px] animate-pulse" />
-      <div className="absolute right-0 bottom-0 h-125 w-125 rounded-full bg-cyan-600/20 blur-[150px] animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-75 w-75 rounded-full bg-fuchsia-600/10 blur-[100px] animate-pulse" style={{ animationDelay: "2s" }} />
+      <div className="absolute left-0 top-0 h-125 w-125 rounded-full bg-emerald-600/15 blur-[150px] animate-pulse" />
+      <div className="absolute right-0 bottom-0 h-125 w-125 rounded-full bg-zinc-600/20 blur-[150px] animate-pulse" style={{ animationDelay: "1s" }} />
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-75 w-75 rounded-full bg-emerald-600/10 blur-[100px] animate-pulse" style={{ animationDelay: "2s" }} />
 
       {/* Floating particles */}
       <FloatingParticles />
@@ -208,7 +208,7 @@ export function Hero() {
         ref={spotlightRef}
         className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
         style={{
-          background: `radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(139,92,246,0.08), transparent 40%)`,
+          background: `radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16,185,129,0.06), transparent 40%)`,
         }}
       />
 
@@ -216,18 +216,18 @@ export function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-size-[32px_32px] mask-[radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       {/* Horizontal lines */}
-      <div className="absolute left-0 right-0 top-1/4 h-px bg-linear-to-r from-transparent via-violet-500/20 to-transparent" />
-      <div className="absolute left-0 right-0 bottom-1/4 h-px bg-linear-to-r from-transparent via-cyan-500/20 to-transparent" />
+      <div className="absolute left-0 right-0 top-1/4 h-px bg-linear-to-r from-transparent via-emerald-500/20 to-transparent" />
+      <div className="absolute left-0 right-0 bottom-1/4 h-px bg-linear-to-r from-transparent via-zinc-500/20 to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 max-w-5xl text-center">
         {/* Badge */}
         <div
           ref={badgeRef}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-2 backdrop-blur-sm"
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 backdrop-blur-sm"
         >
-          <Sparkles className="h-4 w-4 text-violet-400" />
-          <span className="text-sm font-medium text-violet-300">
+          <Sparkles className="h-4 w-4 text-emerald-400" />
+          <span className="text-sm font-medium text-emerald-300">
             Full-Stack Developer
           </span>
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -238,11 +238,11 @@ export function Hero() {
           ref={titleRef}
           className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
           style={{
-            textShadow: "0 0 80px rgba(139,92,246,0.3), 0 0 40px rgba(139,92,246,0.2)",
+            textShadow: "0 0 80px rgba(16,185,129,0.2), 0 0 40px rgba(16,185,129,0.15)",
           }}
         >
           <span className="block">{renderSplitText("ULUGBEK")}</span>
-          <span className="block mt-2 bg-linear-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+          <span className="block mt-2 bg-linear-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
             {renderSplitText("ESHNAZAROV")}
           </span>
         </h1>
@@ -280,19 +280,19 @@ export function Hero() {
         >
           <Button
             size="lg"
-            className="group relative w-full sm:w-auto min-w-50 overflow-hidden rounded-full bg-linear-to-r from-violet-600 to-fuchsia-600 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-violet-500/25 transition-all duration-300 hover:shadow-violet-500/40 hover:scale-105"
+            className="group relative w-full sm:w-auto min-w-50 overflow-hidden rounded-full bg-linear-to-r from-emerald-600 to-teal-600 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all duration-300 hover:shadow-emerald-500/40 hover:scale-105"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               Loyihalarni ko&apos;rish
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
-            <div className="absolute inset-0 bg-linear-to-r from-violet-700 to-fuchsia-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <div className="absolute inset-0 bg-linear-to-r from-emerald-700 to-teal-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
           </Button>
 
           <Button
             variant="outline"
             size="lg"
-            className="group w-full sm:w-auto min-w-50 rounded-full border-zinc-700 bg-white/5 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-violet-500/50 hover:bg-violet-500/10"
+            className="group w-full sm:w-auto min-w-50 rounded-full border-zinc-700 bg-zinc-900/50 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-emerald-500/50 hover:bg-emerald-500/10"
           >
             <span className="flex items-center justify-center gap-2">
               Bog&apos;lanish
@@ -308,7 +308,7 @@ export function Hero() {
           Scroll
         </span>
         <div className="flex h-12 w-7 items-start justify-center rounded-full border border-zinc-800 bg-zinc-900/50 p-2 backdrop-blur-sm">
-          <div className="h-2 w-1 animate-bounce rounded-full bg-linear-to-b from-violet-400 to-fuchsia-400" />
+          <div className="h-2 w-1 animate-bounce rounded-full bg-linear-to-b from-emerald-400 to-teal-400" />
         </div>
       </div>
 

@@ -4,7 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Smartphone, Zap, Package, RefreshCw, ArrowUpRight } from "lucide-react";
+import { Smartphone, Zap, Package, RefreshCw, ArrowUpRight, Activity, TrendingUp, Heart, Play } from "lucide-react";
 import {
   SiReact,
   SiExpo,
@@ -163,67 +163,111 @@ export function MobileDev() {
 
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Phone Mockup */}
-          <div ref={phoneRef} className="relative flex items-center justify-center">
-            {/* Glow effect */}
-            <div className="absolute h-64 w-64 rounded-full bg-cyan-500/20 blur-[100px]" />
+          <div ref={phoneRef} className="relative flex items-center justify-center py-8 lg:py-0">
+            {/* Multiple glow effects */}
+            <div className="absolute h-80 w-80 rounded-full bg-cyan-500/30 blur-[120px]" />
+            <div className="absolute h-60 w-60 rounded-full bg-blue-500/20 blur-[80px] translate-x-10 translate-y-10" />
 
-            {/* Phone frame */}
-            <div className="relative z-10 h-[500px] w-[250px] rounded-[40px] border-4 border-zinc-700 bg-zinc-900 p-2 shadow-2xl sm:h-[580px] sm:w-[280px]">
-              {/* Notch */}
-              <div className="absolute left-1/2 top-4 h-6 w-24 -translate-x-1/2 rounded-full bg-zinc-800" />
+            {/* Phone frame container */}
+            <div className="relative z-10">
+              {/* Phone frame */}
+              <div className="relative rounded-[2.5rem] sm:rounded-[3rem] border-[6px] sm:border-8 border-zinc-800 bg-zinc-900 p-1.5 sm:p-2 shadow-2xl shadow-black/50">
+                {/* Dynamic Island */}
+                <div className="absolute left-1/2 top-3 sm:top-4 h-6 sm:h-7 w-24 sm:w-28 -translate-x-1/2 rounded-full bg-black z-20 flex items-center justify-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-zinc-800" />
+                  <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                </div>
 
-              {/* Screen */}
-              <div className="h-full w-full overflow-hidden rounded-[32px] bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-500/20">
-                {/* App content mockup */}
-                <div className="flex h-full flex-col p-4 pt-10">
-                  {/* Status bar */}
-                  <div className="flex items-center justify-between text-xs text-white/60">
-                    <span>9:41</span>
-                    <div className="flex items-center gap-1">
-                      <div className="h-2 w-4 rounded-sm bg-white/60" />
-                      <div className="h-2.5 w-2.5 rounded-full border border-white/60" />
+                {/* Screen container */}
+                <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] bg-linear-to-b from-zinc-900 via-zinc-950 to-black w-64 h-130 sm:w-72 sm:h-145 md:w-80 md:h-160 lg:w-85 lg:h-170">
+                  {/* App content */}
+                  <div className="flex h-full flex-col p-4 pt-12 sm:p-5 sm:pt-14">
+                    {/* Status bar */}
+                    <div className="flex items-center justify-between text-[10px] sm:text-xs text-white/70 mb-4">
+                      <span className="font-medium">9:41</span>
+                      <div className="flex items-center gap-1">
+                        <div className="flex gap-0.5">
+                          <div className="h-2.5 w-0.5 rounded-full bg-white/70" />
+                          <div className="h-2.5 w-0.5 rounded-full bg-white/70" />
+                          <div className="h-2.5 w-0.5 rounded-full bg-white/50" />
+                          <div className="h-2.5 w-0.5 rounded-full bg-white/30" />
+                        </div>
+                        <div className="ml-1 h-2.5 w-5 rounded-sm border border-white/70 flex items-center justify-end pr-0.5">
+                          <div className="h-1.5 w-3 rounded-sm bg-emerald-500" />
+                        </div>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* App header */}
-                  <div className="mt-6">
-                    <h3 className="text-xl font-bold text-white">Dashboard</h3>
-                    <p className="text-sm text-white/60">Welcome back!</p>
-                  </div>
+                    {/* Header */}
+                    <div className="mb-5 sm:mb-6">
+                      <p className="text-white/50 text-xs sm:text-sm">Xush kelibsiz</p>
+                      <h3 className="text-lg sm:text-xl font-bold text-white mt-0.5">Ulug&apos;bek</h3>
+                    </div>
 
-                  {/* Stats cards */}
-                  <div className="mt-6 grid grid-cols-2 gap-3">
-                    <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
-                      <div className="text-2xl font-bold text-cyan-400">12.5K</div>
-                      <div className="text-xs text-white/60">Steps today</div>
+                    {/* Stats cards */}
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-4">
+                      <div className="rounded-2xl bg-linear-to-br from-cyan-500/20 to-blue-500/10 border border-cyan-500/20 p-3 sm:p-4">
+                        <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 mb-2" />
+                        <div className="text-xl sm:text-2xl font-bold text-white">12.5K</div>
+                        <div className="text-[10px] sm:text-xs text-white/50">Qadamlar</div>
+                      </div>
+                      <div className="rounded-2xl bg-linear-to-br from-purple-500/20 to-pink-500/10 border border-purple-500/20 p-3 sm:p-4">
+                        <Heart className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400 mb-2" />
+                        <div className="text-xl sm:text-2xl font-bold text-white">72</div>
+                        <div className="text-[10px] sm:text-xs text-white/50">BPM</div>
+                      </div>
                     </div>
-                    <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
-                      <div className="text-2xl font-bold text-purple-400">8.2</div>
-                      <div className="text-xs text-white/60">Hours sleep</div>
-                    </div>
-                  </div>
 
-                  {/* Progress */}
-                  <div className="mt-4 rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
-                    <div className="mb-2 flex items-center justify-between">
-                      <span className="text-sm text-white">Daily Goal</span>
-                      <span className="text-sm font-bold text-cyan-400">78%</span>
+                    {/* Progress card */}
+                    <div className="rounded-2xl bg-white/5 border border-white/10 p-3 sm:p-4 mb-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="h-4 w-4 text-emerald-400" />
+                          <span className="text-xs sm:text-sm text-white font-medium">Kunlik maqsad</span>
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-emerald-400">78%</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                        <div className="h-full w-[78%] rounded-full bg-linear-to-r from-emerald-400 to-cyan-400" />
+                      </div>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-white/20">
-                      <div className="h-full w-[78%] rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
-                    </div>
-                  </div>
 
-                  {/* Bottom nav */}
-                  <div className="mt-auto flex items-center justify-around rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/30">
-                      <div className="h-5 w-5 rounded bg-cyan-400" />
+                    {/* Workout card */}
+                    <div className="rounded-2xl bg-linear-to-r from-emerald-500/20 to-teal-500/10 border border-emerald-500/20 p-3 sm:p-4 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs sm:text-sm font-medium text-white">Ertalabki mashq</p>
+                        <p className="text-[10px] sm:text-xs text-white/50 mt-0.5">30 daqiqa • Kardio</p>
+                      </div>
+                      <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-emerald-500 flex items-center justify-center">
+                        <Play className="h-4 w-4 sm:h-5 sm:w-5 text-white fill-white ml-0.5" />
+                      </div>
                     </div>
-                    <div className="h-5 w-5 rounded-full bg-white/30" />
-                    <div className="h-5 w-5 rounded bg-white/30" />
-                    <div className="h-5 w-5 rounded-full bg-white/30" />
+
+                    {/* Bottom nav */}
+                    <div className="mt-auto flex items-center justify-around rounded-2xl bg-white/5 border border-white/10 p-2 sm:p-3">
+                      <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-cyan-500/20">
+                        <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
+                      </div>
+                      <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-white/20" />
+                      <div className="h-4 w-4 sm:h-5 sm:w-5 rounded bg-white/20" />
+                      <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-white/20" />
+                    </div>
                   </div>
                 </div>
+
+                {/* Home indicator */}
+                <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 h-1 w-24 sm:w-32 rounded-full bg-white/30" />
+              </div>
+
+              {/* Floating elements around phone */}
+              <div className="absolute -right-4 sm:-right-6 top-16 sm:top-20 h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-linear-to-br from-cyan-500 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/30 animate-bounce" style={{ animationDuration: "3s" }}>
+                <SiReact className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+              </div>
+              <div className="absolute -left-4 sm:-left-6 bottom-24 sm:bottom-32 h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-purple-500/30 animate-bounce" style={{ animationDuration: "4s", animationDelay: "1s" }}>
+                <SiExpo className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              </div>
+              <div className="absolute -right-2 sm:-right-4 bottom-40 sm:bottom-48 h-8 w-8 sm:h-9 sm:w-9 rounded-lg bg-linear-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30 animate-bounce" style={{ animationDuration: "3.5s", animationDelay: "0.5s" }}>
+                <SiFirebase className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
             </div>
           </div>
@@ -305,7 +349,7 @@ export function MobileDev() {
             {/* CTA */}
             <a
               href="#contact"
-              className="group flex items-center justify-between rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 p-6 transition-all duration-300 hover:border-cyan-500/50"
+              className="group flex items-center justify-between rounded-2xl border border-cyan-500/30 bg-linear-to-r from-cyan-500/10 to-blue-500/10 p-6 transition-all duration-300 hover:border-cyan-500/50"
             >
               <div>
                 <h4 className="text-lg font-semibold text-white">
