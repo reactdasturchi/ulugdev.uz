@@ -100,13 +100,13 @@ function TechCard({
   color: string;
 }) {
   return (
-    <Card className="group mx-2 h-24 w-24 shrink-0 border-zinc-800 bg-zinc-900/50 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-800/50 sm:mx-3 sm:h-28 sm:w-28 md:mx-3 md:h-36 md:w-36 lg:mx-4 lg:h-40 lg:w-40">
+    <Card className="group mx-2 h-80 w-80 shrink-0 border-zinc-800 bg-zinc-900/50 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-800/50 sm:mx-3 sm:h-28 sm:w-28 md:mx-3 md:h-36 md:w-36 lg:mx-4 lg:h-40 lg:w-40">
       <CardContent className="flex h-full flex-col items-center justify-center gap-1 p-2 sm:gap-2.5 sm:p-3 md:gap-3 md:p-4 lg:p-5">
         <Icon
-          className="h-10 w-10 transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14 md:h-16 md:w-16 lg:h-18 lg:w-18"
+          className="h-60 w-60 transition-transform duration-300 group-hover:scale-110 sm:h-84 sm:w-84 md:h-48 md:w-48 lg:h-84 lg:w-84"
           style={{ color }}
         />
-        <span className="text-[9px] font-medium text-zinc-400 sm:text-[11px] md:text-xs lg:text-sm">
+        <span className=" block text-[9px] font-medium text-zinc-400  md:text-xs lg:text-sm">
           {name}
         </span>
       </CardContent>
