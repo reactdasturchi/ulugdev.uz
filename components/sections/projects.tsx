@@ -225,22 +225,17 @@ export function Projects() {
           },
         });
 
-        titleTl.from(h2Element, {
-          y: 60,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-        });
+        titleTl.fromTo(
+          h2Element,
+          { y: 60, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "all" }
+        );
 
         if (pElement) {
-          titleTl.from(
+          titleTl.fromTo(
             pElement,
-            {
-              y: 40,
-              opacity: 0,
-              duration: 0.6,
-              ease: "power3.out",
-            },
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", clearProps: "all" },
             "-=0.4"
           );
         }
@@ -248,21 +243,26 @@ export function Projects() {
 
       // Grid cards animation
       if (gridRef.current?.children) {
-        gsap.from(gridRef.current.children, {
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: "top 80%",
-          },
-          y: 80,
-          opacity: 0,
-          scale: 0.95,
-          duration: 0.8,
-          stagger: {
-            amount: 0.6,
-            from: "start",
-          },
-          ease: "power3.out",
-        });
+        gsap.fromTo(
+          gridRef.current.children,
+          { y: 80, opacity: 0, scale: 0.95 },
+          {
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: "top 80%",
+            },
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: {
+              amount: 0.6,
+              from: "start",
+            },
+            ease: "power3.out",
+            clearProps: "all",
+          }
+        );
       }
     },
     { scope: sectionRef }

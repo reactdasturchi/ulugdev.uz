@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "@/components/ui/button";
@@ -116,14 +116,16 @@ export function Hero() {
       // Title animation
       const titleChars = titleRef.current?.querySelectorAll(".char");
       if (titleChars && titleChars.length > 0) {
-        tl.from(
+        tl.fromTo(
           titleChars,
+          { y: 100, opacity: 0, rotateX: -90 },
           {
-            y: 100,
-            opacity: 0,
-            rotateX: -90,
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
             stagger: 0.02,
             duration: 0.8,
+            clearProps: "all",
           },
           "-=0.4"
         );
@@ -132,13 +134,15 @@ export function Hero() {
       // Subtitle animation
       const subtitleWords = subtitleRef.current?.querySelectorAll(".word");
       if (subtitleWords && subtitleWords.length > 0) {
-        tl.from(
+        tl.fromTo(
           subtitleWords,
+          { y: 30, opacity: 0 },
           {
-            y: 30,
-            opacity: 0,
+            y: 0,
+            opacity: 1,
             stagger: 0.05,
             duration: 0.6,
+            clearProps: "all",
           },
           "-=0.4"
         );

@@ -58,20 +58,22 @@ const experiences = [
 function TimelineDot({ isCurrent }: { isCurrent: boolean }) {
   return (
     <div className="relative flex h-4 w-4 items-center justify-center sm:h-5 sm:w-5">
-      {/* Pulsating ring - only for current */}
-      {isCurrent && (
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-      )}
+      {/* Pulsating ring - ALL dots pulse */}
+      <span
+        className={`absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 ${
+          isCurrent ? "opacity-75" : "opacity-50"
+        }`}
+      />
       {/* Outer glow */}
       <span
         className={`absolute inline-flex h-full w-full rounded-full ${
-          isCurrent ? "bg-emerald-500/30" : "bg-emerald-600/20"
+          isCurrent ? "bg-emerald-500/30" : "bg-emerald-500/20"
         }`}
       />
       {/* Solid dot */}
       <span
         className={`relative inline-flex h-2.5 w-2.5 rounded-full sm:h-3 sm:w-3 ${
-          isCurrent ? "bg-emerald-400" : "bg-emerald-600"
+          isCurrent ? "bg-emerald-400" : "bg-emerald-500"
         } shadow-lg shadow-emerald-500/50`}
       />
     </div>
