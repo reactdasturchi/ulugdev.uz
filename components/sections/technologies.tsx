@@ -48,7 +48,7 @@ const technologies = [
   // Row 1 - Frontend
   [
     { name: "React", icon: SiReact, color: "#61DAFB" },
-    { name: "Next.js", icon: SiNextdotjs, color: "#000000" },
+    { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
     { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
     { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
     { name: "Tailwind CSS", icon: SiTailwindcss, color: "#06B6D4" },
@@ -60,13 +60,13 @@ const technologies = [
   // Row 2 - Backend
   [
     { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
-    { name: "Express", icon: SiExpress, color: "#000000" },
+    { name: "Express", icon: SiExpress, color: "#FFFFFF" },
     { name: "NestJS", icon: SiNestjs, color: "#E0234E" },
     { name: "Python", icon: SiPython, color: "#3776AB" },
-    { name: "Django", icon: SiDjango, color: "#092E20" },
+    { name: "Django", icon: SiDjango, color: "#44B78B" },
     { name: "FastAPI", icon: SiFastapi, color: "#009688" },
     { name: "GraphQL", icon: SiGraphql, color: "#E10098" },
-    { name: "Prisma", icon: SiPrisma, color: "#2D3748" },
+    { name: "Prisma", icon: SiPrisma, color: "#5A67D8" },
   ],
   // Row 3 - Database & DevOps
   [
@@ -79,12 +79,12 @@ const technologies = [
     { name: "Docker", icon: SiDocker, color: "#2496ED" },
     { name: "Kubernetes", icon: SiKubernetes, color: "#326CE5" },
     { name: "AWS", icon: SiAmazon, color: "#FF9900" },
-    { name: "Vercel", icon: SiVercel, color: "#000000" },
+    { name: "Vercel", icon: SiVercel, color: "#FFFFFF" },
   ],
   // Row 4 - Tools
   [
     { name: "Git", icon: SiGit, color: "#F05032" },
-    { name: "GitHub", icon: SiGithub, color: "#181717" },
+    { name: "GitHub", icon: SiGithub, color: "#FFFFFF" },
     { name: "Linux", icon: SiLinux, color: "#FCC624" },
     { name: "Figma", icon: SiFigma, color: "#F24E1E" },
   ],
@@ -100,13 +100,13 @@ function TechCard({
   color: string;
 }) {
   return (
-    <Card className="group mx-2 h-80 w-80 shrink-0 border-zinc-800 bg-zinc-900/50 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-800/50 sm:mx-3 sm:h-28 sm:w-28 md:mx-3 md:h-36 md:w-36 lg:mx-4 lg:h-40 lg:w-40">
-      <CardContent className="flex h-full flex-col items-center justify-center gap-1 p-2 sm:gap-2.5 sm:p-3 md:gap-3 md:p-4 lg:p-5">
+    <Card className="group mx-2 h-28 w-28 shrink-0 border-zinc-800 bg-zinc-900/80 transition-all duration-300 hover:border-zinc-600 hover:bg-zinc-800/90 sm:mx-3 sm:h-32 sm:w-32 md:mx-4 md:h-40 md:w-40 lg:mx-5 lg:h-44 lg:w-44">
+      <CardContent className="flex h-full flex-col items-center justify-center gap-2 p-2 sm:gap-3 sm:p-3 md:gap-3 md:p-4 lg:gap-4 lg:p-5">
         <Icon
-          className="h-60 w-60 transition-transform duration-300 group-hover:scale-110 sm:h-84 sm:w-84 md:h-48 md:w-48 lg:h-84 lg:w-84"
+          className="h-12 w-12 transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14 md:h-20 md:w-20 lg:h-24 lg:w-24"
           style={{ color }}
         />
-        <span className=" block text-[9px] font-medium text-zinc-400  md:text-xs lg:text-sm">
+        <span className="block text-[11px] font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors sm:text-xs md:text-sm lg:text-base">
           {name}
         </span>
       </CardContent>

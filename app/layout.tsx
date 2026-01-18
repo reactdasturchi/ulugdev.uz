@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { LenisProvider } from "@/components/providers/lenis-provider";
-import { CustomCursor } from "@/components/ui/custom-cursor";
 import { Navigation } from "@/components/navigation";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -65,13 +65,22 @@ export default function RootLayout({
           {/* Grid Background */}
           <div className="grid-background" />
 
-          {/* Custom Cursor */}
-          <CustomCursor />
-
           {/* Navigation */}
           <Navigation />
 
           {children}
+
+          {/* Toast notifications */}
+          <Toaster
+            position="top-center"
+            toastOptions={{
+              style: {
+                background: "#18181b",
+                border: "1px solid #27272a",
+                color: "#fff",
+              },
+            }}
+          />
         </LenisProvider>
       </body>
     </html>

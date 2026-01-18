@@ -89,11 +89,10 @@ export async function POST(request: NextRequest) {
         { status: 200 }
       );
     } else {
-      // If Telegram fails, still return success but log the error
-      console.error("Failed to send to Telegram, but accepting the message");
+      console.error("Failed to send to Telegram");
       return NextResponse.json(
-        { success: true, message: "Xabar qabul qilindi" },
-        { status: 200 }
+        { success: false, error: "Xabar yuborishda xatolik. Telegram orqali yozing." },
+        { status: 500 }
       );
     }
   } catch (error) {

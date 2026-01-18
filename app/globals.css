@@ -116,15 +116,7 @@
   }
 }
 
-/* Custom cursor only on desktop (non-touch devices) */
-@media (hover: hover) and (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a, button, input, textarea, select {
-    cursor: none;
-  }
-}
+/* Cursor styles removed - using default browser cursor */
 
 /* Noise Overlay */
 .noise-overlay {
@@ -251,4 +243,22 @@
 
 .animate-marquee-right {
   animation: marquee-right linear infinite;
+}
+
+/* Animated border spin for education card */
+@keyframes border-spin {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-border-spin {
+  background-size: 300% 300%;
+  animation: border-spin 6s ease infinite;
 }

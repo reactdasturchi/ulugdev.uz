@@ -4,47 +4,49 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Terminal, Code2, Globe, Sparkles } from "lucide-react";
 
 gsap.registerPlugin(useGSAP);
 
-// Pre-generated particle positions to avoid Math.random in render
-const PARTICLE_POSITIONS = [
-  { left: 15, top: 25, delay: 0.5, duration: 8 },
-  { left: 85, top: 15, delay: 1.2, duration: 12 },
-  { left: 45, top: 80, delay: 2.1, duration: 9 },
-  { left: 70, top: 45, delay: 0.8, duration: 11 },
-  { left: 25, top: 65, delay: 3.2, duration: 7 },
-  { left: 90, top: 75, delay: 1.5, duration: 10 },
-  { left: 10, top: 90, delay: 2.8, duration: 8 },
-  { left: 55, top: 20, delay: 0.3, duration: 13 },
-  { left: 35, top: 55, delay: 4.1, duration: 9 },
-  { left: 80, top: 35, delay: 1.9, duration: 11 },
-  { left: 20, top: 40, delay: 2.5, duration: 8 },
-  { left: 65, top: 85, delay: 0.7, duration: 12 },
-  { left: 50, top: 10, delay: 3.5, duration: 10 },
-  { left: 95, top: 55, delay: 1.1, duration: 9 },
-  { left: 5, top: 70, delay: 2.3, duration: 11 },
-  { left: 40, top: 30, delay: 4.5, duration: 7 },
-  { left: 75, top: 60, delay: 0.9, duration: 13 },
-  { left: 30, top: 95, delay: 3.8, duration: 8 },
-  { left: 60, top: 50, delay: 1.7, duration: 10 },
-  { left: 12, top: 5, delay: 2.9, duration: 12 },
-];
+// -----------------------------------------------------------------------------
+// COMPONENTS
+// -----------------------------------------------------------------------------
 
-// Floating particles component
-function FloatingParticles() {
+// Harakatlanuvchi orqa fon "Aurora" effekti
+function AuroraBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {PARTICLE_POSITIONS.map((particle, i) => (
+      <div className="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-indigo-600/20 blur-[120px] mix-blend-screen animate-blob" />
+      <div className="absolute -top-[20%] -right-[10%] w-[60vw] h-[60vw] rounded-full bg-violet-600/20 blur-[120px] mix-blend-screen animate-blob animation-delay-2000" />
+      <div className="absolute -bottom-[20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-cyan-600/20 blur-[120px] mix-blend-screen animate-blob animation-delay-4000" />
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150" />
+    </div>
+  );
+}
+
+// Yulduzlar va "Oqayotgan yulduz" effekti
+function StarField() {
+  // Random yulduzlar
+  const stars = Array.from({ length: 40 }).map((_, i) => ({
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    size: Math.random() * 8 + 1,
+    duration: Math.random() * 8 + 2,
+  }));
+
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      {stars.map((star, i) => (
         <div
           key={i}
-          className="absolute h-1 w-1 rounded-full bg-white/20 animate-float"
+          className="absolute rounded-full bg-white animate-pulse"
           style={{
-            left: `${particle.left}%`,
-            top: `${particle.top}%`,
-            animationDelay: `${particle.delay}s`,
-            animationDuration: `${particle.duration}s`,
+            left: `${star.left}%`,
+            top: `${star.top}%`,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            opacity: Math.random() * 0.5 + 0.1,
+            animationDuration: `${star.duration}s`,
           }}
         />
       ))}
@@ -52,271 +54,222 @@ function FloatingParticles() {
   );
 }
 
-// Animated gradient ring
-function GradientRing() {
-  return (
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-      <div className="relative h-150 w-150 sm:h-200 sm:w-200 lg:h-250 lg:w-250">
-        {/* Outer rotating ring */}
-        <div className="absolute inset-0 rounded-full border border-white/5 animate-spin-slow" />
-        <div
-          className="absolute inset-8 rounded-full border border-white/5 animate-spin-slow"
-          style={{ animationDirection: "reverse", animationDuration: "25s" }}
-        />
-        <div className="absolute inset-16 rounded-full border border-white/5 animate-spin-slow" style={{ animationDuration: "30s" }} />
-
-        {/* Gradient glow */}
-        <div className="absolute inset-0 rounded-full bg-linear-to-r from-emerald-500/10 via-transparent to-zinc-500/10 blur-3xl animate-pulse" />
-      </div>
-    </div>
-  );
-}
+// -----------------------------------------------------------------------------
+// MAIN HERO COMPONENT
+// -----------------------------------------------------------------------------
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const badgeRef = useRef<HTMLDivElement>(null);
-  const spotlightRef = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
 
-  // Spotlight effect
+  // Sichqoncha harakati uchun Spotlight effekti
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      if (spotlightRef.current) {
-        spotlightRef.current.style.setProperty("--mouse-x", `${x}px`);
-        spotlightRef.current.style.setProperty("--mouse-y", `${y}px`);
-      }
+      if (!containerRef.current) return;
+      const { left, top } = containerRef.current.getBoundingClientRect();
+      const x = e.clientX - left;
+      const y = e.clientY - top;
+      containerRef.current.style.setProperty("--mouse-x", `${x}px`);
+      containerRef.current.style.setProperty("--mouse-y", `${y}px`);
     };
 
-    container.addEventListener("mousemove", handleMouseMove);
-    return () => container.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
-      // Badge animation
-      if (badgeRef.current) {
+      // 1. Asosiy sarlavha (Harflar pastdan chiqadi)
+      const chars = titleRef.current?.querySelectorAll(".char");
+      if (chars) {
         tl.fromTo(
-          badgeRef.current,
-          { y: -20, opacity: 0, scale: 0.9 },
-          { y: 0, opacity: 1, scale: 1, duration: 0.8 }
-        );
-      }
-
-      // Title animation
-      const titleChars = titleRef.current?.querySelectorAll(".char");
-      if (titleChars && titleChars.length > 0) {
-        tl.fromTo(
-          titleChars,
-          { y: 100, opacity: 0, rotateX: -90 },
+          chars,
+          { y: 100, opacity: 0, rotateX: -45 },
           {
             y: 0,
             opacity: 1,
             rotateX: 0,
-            stagger: 0.02,
-            duration: 0.8,
-            clearProps: "all",
-          },
-          "-=0.4"
+            stagger: 0.03,
+            duration: 1.2,
+          }
         );
       }
 
-      // Subtitle animation
-      const subtitleWords = subtitleRef.current?.querySelectorAll(".word");
-      if (subtitleWords && subtitleWords.length > 0) {
+      // 2. Subtitle (So'zlar sekin chiqadi)
+      if (subtitleRef.current) {
         tl.fromTo(
-          subtitleWords,
-          { y: 30, opacity: 0 },
+          subtitleRef.current,
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1 },
+          "-=0.8"
+        );
+      }
+
+      // 3. Buttons (Elastik effekt)
+      if (buttonsRef.current) {
+        tl.fromTo(
+          buttonsRef.current.children,
+          { scale: 0.8, opacity: 0, y: 20 },
+          {
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+          },
+          "-=0.6"
+        );
+      }
+
+      // 4. Stats cards (Glasscards)
+      if (statsRef.current) {
+        tl.fromTo(
+          statsRef.current.children,
+          { y: 40, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            stagger: 0.05,
-            duration: 0.6,
-            clearProps: "all",
+            stagger: 0.1,
+            duration: 1,
+            ease: "power2.out",
           },
-          "-=0.4"
+          "-=0.5"
         );
       }
-
-      // CTA animation
-      tl.fromTo(
-        ctaRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, clearProps: "all" },
-        "-=0.3"
-      );
     },
     { scope: containerRef }
   );
 
-  const renderSplitText = (text: string) => (
-    <span aria-label={text} className="inline-block">
-      {text.split("").map((char, index) => (
-        <span
-          key={index}
-          className="char inline-block transition-all duration-300 hover:text-emerald-400 hover:-translate-y-1"
-          aria-hidden="true"
-          style={{ transformOrigin: "bottom" }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
-    </span>
-  );
-
-  const renderSplitWords = (text: string) => (
-    <span aria-label={text}>
-      {text.split(" ").map((word, index) => (
-        <span key={index} className="word inline-block mr-2" aria-hidden="true">
-          {word}
-        </span>
-      ))}
-    </span>
-  );
+  // Matnni harflarga ajratish funksiyasi
+  const splitText = (text: string) => {
+    return text.split("").map((char, i) => (
+      <span key={i} className="char inline-block" style={{ minWidth: char === " " ? "0.3em" : "0" }}>
+        {char}
+      </span>
+    ));
+  };
 
   return (
     <section
       ref={containerRef}
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-zinc-950 px-4 sm:px-6 selection:bg-emerald-500/30"
+      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] text-white selection:bg-indigo-500/30"
     >
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-linear-to-b from-zinc-900/50 via-zinc-950 to-zinc-950" />
+      {/* BACKGROUND LAYERS */}
+      <AuroraBackground />
+      <StarField />
+      
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
-      {/* Gradient orbs */}
-      <div className="absolute left-0 top-0 h-125 w-125 rounded-full bg-emerald-600/15 blur-[150px] animate-pulse" />
-      <div className="absolute right-0 bottom-0 h-125 w-125 rounded-full bg-zinc-600/20 blur-[150px] animate-pulse" style={{ animationDelay: "1s" }} />
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-75 w-75 rounded-full bg-emerald-600/10 blur-[100px] animate-pulse" style={{ animationDelay: "2s" }} />
-
-      {/* Floating particles */}
-      <FloatingParticles />
-
-      {/* Gradient ring */}
-      <GradientRing />
-
-      {/* Spotlight */}
-      <div
-        ref={spotlightRef}
-        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
+      {/* Spotlight Overlay */}
+      <div 
+        className="pointer-events-none absolute inset-0 transition-opacity duration-300"
         style={{
-          background: `radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16,185,129,0.06), transparent 40%)`,
+          background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(99, 102, 241, 0.07), transparent 40%)`,
         }}
       />
 
-      {/* Grid pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-size-[32px_32px] mask-[radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-
-      {/* Horizontal lines */}
-      <div className="absolute left-0 right-0 top-1/4 h-px bg-linear-to-r from-transparent via-emerald-500/20 to-transparent" />
-      <div className="absolute left-0 right-0 bottom-1/4 h-px bg-linear-to-r from-transparent via-zinc-500/20 to-transparent" />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-5xl text-center">
-        {/* Badge */}
-        <div
-          ref={badgeRef}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-2 backdrop-blur-sm"
-        >
-          <Sparkles className="h-4 w-4 text-emerald-400" />
-          <span className="text-sm font-medium text-emerald-300">
-            Full-Stack Developer
+      {/* CONTENT */}
+      <div className="relative z-10 container mx-auto px-4 flex flex-col items-center text-center">
+        
+        {/* Top Badge */}
+        <div className="mb-6 mt-25 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md transition-transform hover:scale-105 cursor-default">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-xs font-medium tracking-wide text-indigo-200">
+            OPEN TO WORK
+          </span>
         </div>
 
-        {/* Main title */}
+        {/* Main Title */}
         <h1
           ref={titleRef}
-          className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
-          style={{
-            textShadow: "0 0 80px rgba(16,185,129,0.2), 0 0 40px rgba(16,185,129,0.15)",
-          }}
+          className="max-w-6xl text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl lg:text-9xl"
         >
-          <span className="block">{renderSplitText("ULUGBEK")}</span>
-          <span className="block mt-2 bg-linear-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-            {renderSplitText("ESHNAZAROV")}
-          </span>
+          <div className="overflow-hidden leading-[1.1]">
+            {splitText("ULUGBEK")}
+          </div>
+          <div className="overflow-hidden leading-[1.1] bg-gradient-to-r from-indigo-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent pb-4">
+            {splitText("ESHNAZAROV")}
+          </div>
         </h1>
 
         {/* Subtitle */}
         <p
           ref={subtitleRef}
-          className="mx-auto mt-6 max-w-xl text-base text-zinc-400 sm:mt-8 sm:text-lg md:text-xl"
+          className="mt-6 max-w-2xl text-lg text-zinc-400 sm:text-xl md:text-2xl leading-relaxed"
         >
-          {renderSplitWords("Zamonaviy va tezkor web ilovalar yarataman")}
+          Zamonaviy va yuqori samarali web ilovalar orqali <br className="hidden sm:block" />
+          biznesingizni <span className="text-white font-medium">yangi bosqichga</span> olib chiqing.
         </p>
 
-        {/* Stats */}
-        <div className="mt-8 flex items-center justify-center gap-8 text-sm text-zinc-500">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-white">3+</span>
-            <span>yillik tajriba</span>
-          </div>
-          <div className="h-4 w-px bg-zinc-800" />
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-white">50+</span>
-            <span>loyihalar</span>
-          </div>
-          <div className="h-4 w-px bg-zinc-800 hidden sm:block" />
-          <div className="hidden sm:flex items-center gap-2">
-            <span className="text-2xl font-bold text-white">100%</span>
-            <span>mamnunlik</span>
-          </div>
-        </div>
-
-        {/* CTA Buttons */}
-        <div
-          ref={ctaRef}
-          className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
-        >
+        {/* Buttons */}
+        <div ref={buttonsRef} className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
           <Button
+            asChild
             size="lg"
-            className="group relative w-full sm:w-auto min-w-50 overflow-hidden rounded-full bg-linear-to-r from-emerald-600 to-teal-600 px-8 py-6 text-base font-semibold text-white shadow-lg shadow-emerald-500/25 transition-all duration-300 hover:shadow-emerald-500/40 hover:scale-105"
+            className="group relative h-14 w-full sm:w-auto overflow-hidden rounded-full bg-white text-black hover:bg-zinc-200 px-8 text-base font-semibold shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] transition-all hover:scale-105 active:scale-95"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              Loyihalarni ko&apos;rish
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </span>
-            <div className="absolute inset-0 bg-linear-to-r from-emerald-700 to-teal-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <a href="#projects">
+              <span className="relative z-10 flex items-center gap-2">
+                Portfolio
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </a>
           </Button>
 
           <Button
+            asChild
             variant="outline"
             size="lg"
-            className="group w-full sm:w-auto min-w-50 rounded-full border-zinc-700 bg-zinc-900/50 px-8 py-6 text-base font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:border-emerald-500/50 hover:bg-emerald-500/10"
+            className="group h-14 w-full sm:w-auto rounded-full border-white/10 bg-white/5 px-8 text-base font-medium text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/20 hover:scale-105 active:scale-95"
           >
-            <span className="flex items-center justify-center gap-2">
-              Bog&apos;lanish
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            </span>
+            <a href="#contact">
+              <span className="flex items-center gap-2">
+                Bog&apos;lanish
+                <Terminal className="h-4 w-4 text-zinc-400 transition-colors group-hover:text-white" />
+              </span>
+            </a>
           </Button>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 flex flex-col items-center gap-2">
-        <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-600">
-          Scroll
-        </span>
-        <div className="flex h-12 w-7 items-start justify-center rounded-full border border-zinc-800 bg-zinc-900/50 p-2 backdrop-blur-sm">
-          <div className="h-2 w-1 animate-bounce rounded-full bg-linear-to-b from-emerald-400 to-teal-400" />
+        {/* Stats Grid (Glass Cards) */}
+        <div
+          ref={statsRef}
+          className="mt-20 mb-20 grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-8 w-full max-w-4xl"
+        >
+          {[
+            { label: "Tajriba", value: "3+", icon: Terminal, color: "text-indigo-400" },
+            { label: "Loyihalar", value: "50+", icon: Code2, color: "text-violet-400" },
+            { label: "Mijozlar", value: "100%", icon: Globe, color: "text-cyan-400" },
+          ].map((stat, i) => (
+            <div
+              key={i}
+              className="group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-6 backdrop-blur-sm transition-all hover:border-white/10 hover:bg-white/[0.05] hover:-translate-y-1"
+            >
+              <div className={`mb-3 rounded-full bg-white/5 p-3 ${stat.color} ring-1 ring-white/10 group-hover:scale-110 transition-transform`}>
+                <stat.icon size={20} />
+              </div>
+              <span className="text-3xl font-bold text-white mb-1">{stat.value}</span>
+              <span className="text-sm text-zinc-500 font-medium uppercase tracking-wider">{stat.label}</span>
+              
+              {/* Card Hover Glow */}
+              <div className="absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-transparent via-white/5 to-transparent blur-md" />
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Corner decorations */}
-      <div className="absolute left-8 top-8 h-20 w-20 border-l border-t border-zinc-800/50 hidden sm:block" />
-      <div className="absolute right-8 top-8 h-20 w-20 border-r border-t border-zinc-800/50 hidden sm:block" />
-      <div className="absolute bottom-8 left-8 h-20 w-20 border-b border-l border-zinc-800/50 hidden sm:block" />
-      <div className="absolute bottom-8 right-8 h-20 w-20 border-b border-r border-zinc-800/50 hidden sm:block" />
+      {/* Decorative Blur Bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0a0a0a] to-transparent pointer-events-none" />
     </section>
   );
 }
