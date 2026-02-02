@@ -100,13 +100,13 @@ function TechCard({
   color: string;
 }) {
   return (
-    <Card className="group mx-2 h-28 w-28 shrink-0 border-zinc-800 bg-zinc-900/80 transition-all duration-300 hover:border-zinc-600 hover:bg-zinc-800/90 sm:mx-3 sm:h-32 sm:w-32 md:mx-4 md:h-40 md:w-40 lg:mx-5 lg:h-44 lg:w-44">
-      <CardContent className="flex h-full flex-col items-center justify-center gap-2 p-2 sm:gap-3 sm:p-3 md:gap-3 md:p-4 lg:gap-4 lg:p-5">
+    <Card className="group mx-3 h-36 w-36 shrink-0 border-zinc-800 bg-zinc-900/80 transition-all duration-300 hover:border-zinc-600 hover:bg-zinc-800/90 min-[480px]:h-40 min-[480px]:w-40 sm:mx-4 sm:h-44 sm:w-44 md:h-40 md:w-40 lg:mx-5 lg:h-44 lg:w-44">
+      <CardContent className="flex h-full flex-col items-center justify-center gap-2.5 p-3 sm:gap-3 sm:p-4 md:gap-3 md:p-4 lg:gap-4 lg:p-5">
         <Icon
-          className="h-12 w-12 transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14 md:h-20 md:w-20 lg:h-24 lg:w-24"
+          className="h-16 w-16 min-[480px]:h-18 min-[480px]:w-18 transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20 md:h-20 md:w-20 lg:h-24 lg:w-24"
           style={{ color }}
         />
-        <span className="block text-[11px] font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors sm:text-xs md:text-sm lg:text-base">
+        <span className="block text-xs font-medium text-zinc-400 group-hover:text-zinc-200 transition-colors sm:text-sm md:text-sm lg:text-base">
           {name}
         </span>
       </CardContent>
@@ -148,12 +148,12 @@ export function Technologies() {
         </h2>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6 -mx-2 sm:mx-0">
         {technologies.map((row, rowIndex) => (
           <Marquee
             key={rowIndex}
             direction={rowIndex % 2 === 0 ? "left" : "right"}
-            speed={40}
+            speed={35}
             pauseOnHover
             gradient={false}
           >

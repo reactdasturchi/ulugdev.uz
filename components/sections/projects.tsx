@@ -1,104 +1,19 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, Star, GitFork, ArrowUpRight } from "lucide-react";
+import { projects } from "@/lib/projects-data";
+import type { Project } from "@/lib/projects-data";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const projects = [
-  {
-    title: "ShopFlow E-commerce",
-    description:
-      "To'liq funksional e-commerce platforma. Stripe to'lov tizimi, admin panel, buyurtmalarni kuzatish.",
-    tags: ["Next.js 14", "TypeScript", "Prisma", "PostgreSQL", "Stripe"],
-    github: "https://github.com/ulugdev/shopflow",
-    demo: "https://shopflow.ulugdev.uz",
-    stars: 128,
-    forks: 34,
-    featured: true,
-    size: "large", // Takes 2 columns
-    gradient: "from-violet-500/20 via-purple-500/10 to-fuchsia-500/20",
-  },
-  {
-    title: "TaskMaster Pro",
-    description:
-      "Jamoa uchun vazifalarni boshqarish. Kanban board va real-time hamkorlik.",
-    tags: ["React", "Node.js", "Socket.io", "MongoDB"],
-    github: "https://github.com/ulugdev/taskmaster",
-    demo: "https://taskmaster.ulugdev.uz",
-    stars: 89,
-    forks: 21,
-    featured: true,
-    size: "medium",
-    gradient: "from-cyan-500/20 via-blue-500/10 to-indigo-500/20",
-  },
-  {
-    title: "AI Assistant Bot",
-    description:
-      "OpenAI GPT-4 asosida chat bot. Ko'p tilli qo'llab-quvvatlash.",
-    tags: ["Python", "FastAPI", "OpenAI", "LangChain"],
-    github: "https://github.com/ulugdev/ai-assistant",
-    demo: "https://ai.ulugdev.uz",
-    stars: 256,
-    forks: 67,
-    featured: true,
-    size: "medium",
-    gradient: "from-emerald-500/20 via-green-500/10 to-teal-500/20",
-  },
-  {
-    title: "DevConnect Social",
-    description:
-      "Dasturchilar uchun ijtimoiy tarmoq. Portfolio va blog.",
-    tags: ["Next.js", "GraphQL", "Supabase"],
-    github: "https://github.com/ulugdev/devconnect",
-    demo: "https://devconnect.ulugdev.uz",
-    stars: 74,
-    forks: 18,
-    featured: false,
-    size: "small",
-    gradient: "from-orange-500/20 via-amber-500/10 to-yellow-500/20",
-  },
-  {
-    title: "CloudDeploy CLI",
-    description:
-      "Serverless deploy qilish CLI. AWS, Vercel integratsiyasi.",
-    tags: ["Node.js", "TypeScript", "AWS SDK"],
-    github: "https://github.com/ulugdev/clouddeploy",
-    demo: null,
-    stars: 312,
-    forks: 45,
-    featured: false,
-    size: "small",
-    gradient: "from-rose-500/20 via-pink-500/10 to-red-500/20",
-  },
-  {
-    title: "FinTrack Dashboard",
-    description:
-      "Moliyaviy analitika. Real-time grafiklar va hisobotlar.",
-    tags: ["React", "D3.js", "PostgreSQL"],
-    github: "https://github.com/ulugdev/fintrack",
-    demo: "https://fintrack.ulugdev.uz",
-    stars: 156,
-    forks: 38,
-    featured: false,
-    size: "small",
-    gradient: "from-sky-500/20 via-blue-500/10 to-indigo-500/20",
-  },
-];
-
-function BentoCard({
-  project,
-}: {
-  project: (typeof projects)[0];
-}) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  // Bento grid sizes
+function BentoCard({ project }: { project: Project }) {
   const sizeClasses = {
     large: "md:col-span-2 md:row-span-2",
     medium: "md:col-span-1 md:row-span-2",
@@ -106,9 +21,9 @@ function BentoCard({
   };
 
   return (
-    <div
-      ref={cardRef}
-      className={`group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 transition-all duration-500 hover:border-zinc-700 hover:bg-zinc-900/80 ${sizeClasses[project.size as keyof typeof sizeClasses]}`}
+    <Link
+      href={`/projects/${project.slug}`}
+      className={`group relative block overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-4 sm:p-6 transition-all duration-500 hover:border-zinc-700 hover:bg-zinc-900/80 ${sizeClasses[project.size]}`}
     >
       {/* Gradient Background */}
       <div
@@ -137,10 +52,10 @@ function BentoCard({
             </h3>
           </div>
 
-          {/* Arrow indicator */}
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800/50 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/10">
-            <ArrowUpRight className="h-4 w-4 text-zinc-400 transition-transform duration-300 group-hover:rotate-45 group-hover:text-white" />
-          </div>
+          {/* Arrow indicator - 44px min touch target */}
+          <span className="flex h-11 w-11 min-h-[44px] min-w-[44px] sm:h-10 sm:w-10 sm:min-h-0 sm:min-w-0 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800/50 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/10 shrink-0">
+            <ArrowUpRight className="h-5 w-5 text-zinc-400 transition-transform duration-300 group-hover:rotate-45 group-hover:text-white" />
+          </span>
         </div>
 
         {/* Description */}
@@ -179,30 +94,32 @@ function BentoCard({
             </span>
           </div>
 
-          {/* Actions */}
+          {/* Actions - 44px touch targets on mobile; stopPropagation so Link is not triggered */}
           <div className="flex gap-2">
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
+              onClick={(e) => e.stopPropagation()}
+              className="flex h-11 w-11 min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 sm:min-h-0 sm:min-w-0 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white touch-manipulation"
             >
-              <Github className="h-4 w-4" />
+              <Github className="h-5 w-5 sm:h-4 sm:w-4" />
             </a>
             {project.demo && (
               <a
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white"
+                onClick={(e) => e.stopPropagation()}
+                className="flex h-11 w-11 min-h-[44px] min-w-[44px] sm:h-9 sm:w-9 sm:min-h-0 sm:min-w-0 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-400 transition-all duration-300 hover:border-white/20 hover:bg-white/10 hover:text-white touch-manipulation"
               >
-                <ExternalLink className="h-4 w-4" />
+                <ExternalLink className="h-5 w-5 sm:h-4 sm:w-4" />
               </a>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -288,7 +205,7 @@ export function Projects() {
           className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-[repeat(4,minmax(180px,1fr))]"
         >
           {projects.map((project) => (
-            <BentoCard key={project.title} project={project} />
+            <BentoCard key={project.slug} project={project} />
           ))}
         </div>
 

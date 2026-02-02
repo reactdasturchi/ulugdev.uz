@@ -11,7 +11,10 @@ const navItems = [
   { name: "Haqimda", href: "#about" },
   { name: "Texnologiyalar", href: "#technologies" },
   { name: "Tajriba", href: "#experience" },
+  { name: "Yutuqlar", href: "#achievements" },
   { name: "Loyihalar", href: "#projects" },
+  { name: "Narxlar", href: "#pricing" },
+  { name: "FAQ", href: "#faq" },
   { name: "Bog'lanish", href: "#contact" },
 ];
 
@@ -147,7 +150,7 @@ export function Navigation() {
           {/* Logo */}
           <Link
             ref={logoRef}
-            href="#"
+            href="/"
             onClick={() => handleNavClick("#")}
             className="magnetic-btn mr-1 flex items-center rounded-full bg-white px-3 py-1.5 transition-transform duration-300 hover:scale-105 lg:mr-2 lg:px-4 lg:py-2"
           >
@@ -175,23 +178,23 @@ export function Navigation() {
       {/* Mobile Navigation - Bottom Bar with Logo */}
       <div
         ref={mobileNavRef}
-        className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 md:hidden"
+        className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 pb-[env(safe-area-inset-bottom,0)] md:hidden"
       >
         {/* Mobile Logo */}
         <Link
           href="#"
           onClick={() => handleNavClick("#")}
-          className="flex items-center rounded-full border border-zinc-800 bg-zinc-900/90 px-4 py-3 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:bg-zinc-800"
+          className="flex min-h-[48px] min-w-[48px] items-center rounded-full border border-zinc-800 bg-zinc-900/90 px-5 py-3.5 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:bg-zinc-800 active:scale-95"
         >
           <span className="text-sm font-bold tracking-tight text-white">
             ulugdev<span className="text-zinc-500">.uz</span>
           </span>
         </Link>
 
-        {/* Menu Button */}
+        {/* Menu Button - 48px min touch target */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/90 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:bg-zinc-800 active:scale-95"
+          className="flex h-12 w-12 min-h-[48px] min-w-[48px] items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/90 shadow-xl shadow-black/20 backdrop-blur-xl transition-all duration-300 hover:bg-zinc-800 active:scale-95 touch-manipulation"
           aria-label="Toggle menu"
         >
           {isOpen ? (

@@ -84,7 +84,7 @@ function AnimatedStat({ value, suffix, label }: { value: number; suffix: string;
       {/* Main number */}
       <div className="relative z-10">
         <p
-          className={`text-4xl font-bold text-white sm:text-5xl md:text-6xl transition-all duration-300 ${
+          className={`text-3xl font-bold text-white sm:text-5xl md:text-6xl transition-all duration-300 ${
             isHovered ? "text-emerald-400 scale-110" : ""
           }`}
         >
@@ -155,25 +155,25 @@ export function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative min-h-screen px-6 py-32"
+      className="relative min-h-screen px-4 py-24 sm:px-6 sm:py-32"
     >
       <div className="mx-auto max-w-5xl">
         {/* Section title */}
-        <div className="mb-20">
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-zinc-500">
+        <div className="mb-12 sm:mb-20">
+          <p className="mb-3 sm:mb-4 text-xs sm:text-sm font-medium uppercase tracking-[0.2em] sm:tracking-[0.3em] text-zinc-500">
             Men haqimda
           </p>
           <h2
             ref={titleRef}
-            className="text-4xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl"
+            className="text-3xl font-bold tracking-tighter text-white sm:text-5xl md:text-6xl"
           >
             Kim men?
           </h2>
         </div>
 
         {/* Scrollytelling text */}
-        <div ref={wordsRef} className="mb-32">
-          <p className="text-2xl font-medium leading-relaxed sm:text-3xl md:text-4xl lg:text-5xl">
+        <div ref={wordsRef} className="mb-20 sm:mb-32">
+          <p className="text-lg font-medium leading-relaxed sm:text-3xl md:text-4xl lg:text-5xl">
             {paragraphs.map((paragraph, pIndex) => (
               <span key={pIndex}>
                 {paragraph.split(" ").map((word, wIndex) => (
@@ -194,7 +194,7 @@ export function About() {
         {/* Stats */}
         <div
           ref={statsRef}
-          className="grid grid-cols-2 gap-8 border-t border-zinc-800 pt-16 md:grid-cols-4"
+          className="grid grid-cols-2 gap-6 sm:gap-8 border-t border-zinc-800 pt-12 sm:pt-16 md:grid-cols-4"
         >
           {stats.map((stat) => (
             <AnimatedStat

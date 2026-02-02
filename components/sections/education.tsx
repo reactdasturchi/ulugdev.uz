@@ -5,250 +5,394 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { GraduationCap, Calendar, Clock, Award, Code2, CheckCircle2 } from "lucide-react";
+import {
+  GraduationCap,
+  Calendar,
+  MapPin,
+  Award,
+  Sparkles,
+  BookOpen,
+  Trophy,
+  Target,
+  Zap,
+  ArrowUpRight,
+} from "lucide-react";
 import {
   SiReact,
   SiNextdotjs,
   SiTailwindcss,
   SiTypescript,
-  SiRedux,
-  SiSass,
-  SiHtml5,
-  SiCss3,
   SiJavascript,
   SiGit,
+  SiHtml5,
+  SiCss3,
+  SiNodedotjs,
+  SiFigma,
 } from "react-icons/si";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const skills = [
-  { name: "React", icon: SiReact, color: "#61DAFB" },
-  { name: "Next.js", icon: SiNextdotjs, color: "#fff" },
-  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
-  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
-  { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
-  { name: "Redux", icon: SiRedux, color: "#764ABC" },
-  { name: "SCSS", icon: SiSass, color: "#CC6699" },
-  { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
-  { name: "CSS3", icon: SiCss3, color: "#1572B6" },
-  { name: "Git", icon: SiGit, color: "#F05032" },
-];
-
-const achievements = [
-  "10+ amaliy loyihalar",
-  "REST API integratsiya",
-  "Responsive dizayn",
-  "Clean code amaliyoti",
-];
-
 export function Education() {
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const skillsContainerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Title animation
-      gsap.from(titleRef.current, {
+      // Header
+      gsap.from(".edu-badge", {
         scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 85%",
+          trigger: sectionRef.current,
+          start: "top 80%",
         },
-        y: 50,
+        scale: 0,
+        opacity: 0,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+      });
+
+      gsap.from(".edu-title", {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 40,
         opacity: 0,
         duration: 0.8,
+        delay: 0.2,
         ease: "power3.out",
       });
 
-      // Card animation
-      gsap.from(cardRef.current, {
+      // Main card
+      gsap.from(".main-card", {
         scrollTrigger: {
-          trigger: cardRef.current,
-          start: "top 80%",
+          trigger: ".main-card",
+          start: "top 85%",
         },
-        x: -60,
+        y: 80,
         opacity: 0,
         duration: 1,
         ease: "power3.out",
       });
 
-      // Skills container animation
-      gsap.from(skillsContainerRef.current, {
+      // Skill categories
+      gsap.from(".skill-category", {
         scrollTrigger: {
-          trigger: skillsContainerRef.current,
-          start: "top 80%",
+          trigger: ".skills-section",
+          start: "top 85%",
         },
-        x: 60,
+        y: 40,
         opacity: 0,
-        duration: 1,
+        stagger: 0.15,
+        duration: 0.7,
         ease: "power3.out",
       });
 
-      // Individual skill items
-      const skillItems = skillsContainerRef.current?.querySelectorAll(".skill-chip");
-      if (skillItems && skillItems.length > 0) {
-        gsap.fromTo(
-          skillItems,
-          { scale: 0.8, opacity: 0 },
-          {
-            scrollTrigger: {
-              trigger: skillsContainerRef.current,
-              start: "top 75%",
-            },
-            scale: 1,
-            opacity: 1,
-            stagger: 0.05,
-            duration: 0.4,
-            ease: "back.out(1.7)",
-            delay: 0.3,
-          }
-        );
-      }
+      // Achievement cards
+      gsap.from(".achievement-card", {
+        scrollTrigger: {
+          trigger: ".achievements-grid",
+          start: "top 90%",
+        },
+        scale: 0.9,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.5,
+        ease: "back.out(1.7)",
+      });
     },
     { scope: sectionRef }
   );
 
   return (
-    <section ref={sectionRef} id="education" className="px-4 py-24 sm:px-6">
-      <div className="mx-auto max-w-6xl">
+    <section
+      ref={sectionRef}
+      id="education"
+      className="relative py-16 sm:py-24 lg:py-32 overflow-hidden"
+    >
+      {/* Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Gradient orbs */}
+        <div className="absolute top-1/4 -left-32 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl" />
+        {/* Grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         {/* Header */}
-        <div ref={titleRef} className="mb-16 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-4 py-2 text-sm text-amber-400">
-            <GraduationCap className="h-4 w-4" />
-            Ta&apos;lim
+        <div className="text-center mb-12 sm:mb-20">
+          <div className="edu-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 mb-6">
+            <GraduationCap className="w-4 h-4 text-amber-400" />
+            <span className="text-sm font-medium text-amber-400">Ta'lim yo'lim</span>
+            <Sparkles className="w-3 h-3 text-amber-400" />
           </div>
-          <h2 className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl lg:text-6xl">
-            Qayerda o&apos;qiganman?
+          <h2 className="edu-title text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-4">
+            Bilim — kuch
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base text-zinc-400 sm:text-lg">
-            Professional dasturchi bo&apos;lish yo&apos;lidagi ta&apos;lim va ko&apos;nikmalarim
+          <p className="edu-title max-w-xl mx-auto text-sm sm:text-base text-white/50 px-4">
+            Professional dasturchi bo'lish yo'lidagi ta'lim va ko'nikmalarim
           </p>
         </div>
 
-        {/* Main content */}
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-          {/* Education Card */}
-          <div ref={cardRef} className="relative group">
-            {/* Animated gradient border */}
-            <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 opacity-75 blur-sm animate-border-spin" />
-
-            {/* Card content */}
-            <div className="relative rounded-2xl bg-zinc-950 p-1">
-              <div className="rounded-xl bg-gradient-to-b from-zinc-900 to-zinc-950 overflow-hidden">
-                {/* Image */}
-                <div className="relative aspect-video w-full overflow-hidden">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+          
+          {/* Main Education Card - Large */}
+          <div className="main-card lg:col-span-7 xl:col-span-8">
+            <div className="group relative h-full rounded-2xl sm:rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden">
+              {/* Hover glow */}
+              <div className="absolute -inset-px bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+              
+              <div className="relative h-full">
+                {/* Image Header */}
+                <div className="relative h-44 sm:h-56 md:h-64 overflow-hidden">
                   <Image
                     src="/najot-talim.jpg"
                     alt="Najot Ta'lim"
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20" />
+                  
+                  {/* Floating badge */}
+                  <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500 text-black text-xs font-bold shadow-lg shadow-amber-500/25">
+                    <Award className="w-3.5 h-3.5" />
+                    Sertifikatlangan
+                  </div>
 
-                  {/* Badge overlay */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-amber-500/90 px-3 py-1.5 backdrop-blur-sm">
-                    <Award className="h-4 w-4 text-zinc-900" />
-                    <span className="text-sm font-semibold text-zinc-900">Frontend Developer</span>
+                  {/* Year badge */}
+                  <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-white text-xs font-medium">
+                    2023 — 2024
+                  </div>
+
+                  {/* Title on image */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                    <div className="flex items-end justify-between gap-4">
+                      <div>
+                        <p className="text-amber-400 text-xs sm:text-sm font-medium mb-1 flex items-center gap-1.5">
+                          <BookOpen className="w-3.5 h-3.5" />
+                          Frontend Development
+                        </p>
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+                          Najot Ta'lim
+                        </h3>
+                      </div>
+                      <a
+                        href="https://najottalim.uz"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hidden sm:flex items-center gap-1 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 text-white text-sm font-medium hover:bg-white/20 transition-colors"
+                      >
+                        Tashrif
+                        <ArrowUpRight className="w-4 h-4" />
+                      </a>
+                    </div>
                   </div>
                 </div>
 
-                {/* Info */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold text-white sm:text-3xl">
-                    Najot Ta&apos;lim
-                  </h3>
-                  <p className="mt-1 text-lg font-medium text-amber-400">
-                    Frontend Development kursi
-                  </p>
-
-                  <p className="mt-4 text-zinc-400 leading-relaxed">
-                    8 oylik intensiv kurs davomida zamonaviy web texnologiyalarini chuqur o&apos;rgandim. Amaliy loyihalar orqali real tajriba ortirdim.
-                  </p>
-
-                  {/* Meta info */}
-                  <div className="mt-6 flex flex-wrap gap-4">
-                    <div className="flex items-center gap-2 rounded-lg bg-zinc-800/50 px-3 py-2 text-sm">
-                      <Calendar className="h-4 w-4 text-amber-400" />
-                      <span className="text-zinc-300">2023 - 2024</span>
-                    </div>
-                    <div className="flex items-center gap-2 rounded-lg bg-zinc-800/50 px-3 py-2 text-sm">
-                      <Clock className="h-4 w-4 text-amber-400" />
-                      <span className="text-zinc-300">8 oy</span>
-                    </div>
+                {/* Content */}
+                <div className="p-4 sm:p-6">
+                  {/* Meta tags */}
+                  <div className="flex flex-wrap gap-2 sm:gap-3 mb-5">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-white/70 text-xs sm:text-sm">
+                      <Calendar className="w-3.5 h-3.5 text-amber-400" />
+                      8 oy intensiv
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-white/70 text-xs sm:text-sm">
+                      <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                      Toshkent
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 text-white/70 text-xs sm:text-sm">
+                      <Target className="w-3.5 h-3.5 text-emerald-400" />
+                      Muvaffaqiyatli tugatgan
+                    </span>
                   </div>
 
-                  {/* Achievements */}
-                  <div className="mt-6 grid grid-cols-2 gap-2">
-                    {achievements.map((item) => (
-                      <div key={item} className="flex items-center gap-2 text-sm text-zinc-400">
-                        <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
-                        <span>{item}</span>
+                  {/* Description */}
+                  <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-6">
+                    O'zbekistondagi eng yirik IT o'quv markazida zamonaviy web dasturlash 
+                    texnologiyalarini chuqur o'rgandim. Real loyihalar ustida ishlash, 
+                    tajribali mentorlar rahbarligida amaliy ko'nikmalar hosil qildim.
+                  </p>
+
+                  {/* Key points */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-emerald-500/5 border border-emerald-500/10">
+                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-emerald-500/10">
+                        <Zap className="w-3.5 h-3.5 text-emerald-400" />
                       </div>
-                    ))}
+                      <div>
+                        <p className="text-white text-xs sm:text-sm font-medium">Amaliy loyihalar</p>
+                        <p className="text-white/40 text-[10px] sm:text-xs mt-0.5">10+ real projects</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-violet-500/5 border border-violet-500/10">
+                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-violet-500/10">
+                        <Trophy className="w-3.5 h-3.5 text-violet-400" />
+                      </div>
+                      <div>
+                        <p className="text-white text-xs sm:text-sm font-medium">Top bitiruvchi</p>
+                        <p className="text-white/40 text-[10px] sm:text-xs mt-0.5">A'lo baholar</p>
+                      </div>
+                    </div>
                   </div>
+
+                  {/* Mobile link */}
+                  <a
+                    href="https://najottalim.uz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sm:hidden mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-medium"
+                  >
+                    Kurs haqida
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Skills Section */}
-          <div ref={skillsContainerRef} className="flex flex-col justify-center">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400">
-                <Code2 className="h-5 w-5" />
-              </div>
-              <h3 className="text-xl font-semibold text-white sm:text-2xl">
-                O&apos;rgangan texnologiyalarim
-              </h3>
-            </div>
-
-            {/* Skills Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
-              {skills.map((skill) => (
-                <div
-                  key={skill.name}
-                  className="skill-chip group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/80 p-4 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-800/80"
-                >
-                  {/* Glow effect on hover */}
-                  <div
-                    className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    style={{
-                      background: `radial-gradient(circle at center, ${skill.color}15 0%, transparent 70%)`
-                    }}
-                  />
-
-                  <div className="relative flex items-center gap-3">
-                    <div
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-110"
-                      style={{ backgroundColor: `${skill.color}15` }}
-                    >
-                      <skill.icon
-                        className="h-5 w-5 sm:h-6 sm:w-6"
-                        style={{ color: skill.color }}
-                      />
-                    </div>
-                    <span className="text-sm font-medium text-zinc-300 group-hover:text-white transition-colors sm:text-base">
-                      {skill.name}
-                    </span>
-                  </div>
+          {/* Skills Section - Right Side */}
+          <div className="skills-section lg:col-span-5 xl:col-span-4 space-y-4 sm:space-y-6">
+            
+            {/* Frontend Skills */}
+            <div className="skill-category rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="h-8 w-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                  <SiReact className="w-4 h-4 text-cyan-400" />
                 </div>
-              ))}
+                <h4 className="text-sm sm:text-base font-semibold text-white">Frontend</h4>
+              </div>
+              <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiReact className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">React</span>
+                </div>
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiNextdotjs className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">Next.js</span>
+                </div>
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiTypescript className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">TypeScript</span>
+                </div>
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiJavascript className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-400" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">JavaScript</span>
+                </div>
+              </div>
             </div>
 
-            {/* Stats */}
-            <div className="mt-8 grid grid-cols-3 gap-4">
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-center">
-                <div className="text-2xl font-bold text-amber-400 sm:text-3xl">10+</div>
-                <div className="mt-1 text-xs text-zinc-500 sm:text-sm">Loyihalar</div>
+            {/* Styling Skills */}
+            <div className="skill-category rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="h-8 w-8 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                  <SiTailwindcss className="w-4 h-4 text-cyan-400" />
+                </div>
+                <h4 className="text-sm sm:text-base font-semibold text-white">Styling & Tools</h4>
               </div>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-center">
-                <div className="text-2xl font-bold text-amber-400 sm:text-3xl">8</div>
-                <div className="mt-1 text-xs text-zinc-500 sm:text-sm">Oy davomiylik</div>
+              <div className="grid grid-cols-4 gap-2 sm:gap-3">
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiTailwindcss className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">Tailwind</span>
+                </div>
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiHtml5 className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">HTML5</span>
+                </div>
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiCss3 className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">CSS3</span>
+                </div>
+                <div className="group flex flex-col items-center gap-1.5 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiFigma className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400" />
+                  <span className="text-[10px] sm:text-xs text-white/60 group-hover:text-white transition-colors">Figma</span>
+                </div>
               </div>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-center">
-                <div className="text-2xl font-bold text-amber-400 sm:text-3xl">10</div>
-                <div className="mt-1 text-xs text-zinc-500 sm:text-sm">Texnologiya</div>
+            </div>
+
+            {/* Backend & Tools */}
+            <div className="skill-category rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="h-8 w-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                  <SiNodedotjs className="w-4 h-4 text-green-400" />
+                </div>
+                <h4 className="text-sm sm:text-base font-semibold text-white">Backend & DevOps</h4>
+              </div>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                <div className="group flex items-center gap-3 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiNodedotjs className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
+                  <span className="text-xs sm:text-sm text-white/60 group-hover:text-white transition-colors">Node.js</span>
+                </div>
+                <div className="group flex items-center gap-3 p-2.5 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                  <SiGit className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
+                  <span className="text-xs sm:text-sm text-white/60 group-hover:text-white transition-colors">Git & GitHub</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Achievement Stats - Bottom Full Width */}
+          <div className="achievements-grid lg:col-span-12 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            {/* Stat 1 */}
+            <div className="achievement-card group relative p-4 sm:p-6 rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
+                  8
+                </div>
+                <p className="text-xs sm:text-sm text-white/50 mt-1">oy o'qish</p>
+                <div className="absolute top-0 right-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-amber-500/10 flex items-center justify-center">
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+                </div>
+              </div>
+            </div>
+
+            {/* Stat 2 */}
+            <div className="achievement-card group relative p-4 sm:p-6 rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                  10+
+                </div>
+                <p className="text-xs sm:text-sm text-white/50 mt-1">loyihalar</p>
+                <div className="absolute top-0 right-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                  <Target className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                </div>
+              </div>
+            </div>
+
+            {/* Stat 3 */}
+            <div className="achievement-card group relative p-4 sm:p-6 rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">
+                  10+
+                </div>
+                <p className="text-xs sm:text-sm text-white/50 mt-1">texnologiya</p>
+                <div className="absolute top-0 right-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-violet-500/10 flex items-center justify-center">
+                  <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-violet-400" />
+                </div>
+              </div>
+            </div>
+
+            {/* Stat 4 */}
+            <div className="achievement-card group relative p-4 sm:p-6 rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                  A+
+                </div>
+                <p className="text-xs sm:text-sm text-white/50 mt-1">yakuniy baho</p>
+                <div className="absolute top-0 right-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cyan-500/10 flex items-center justify-center">
+                  <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
+                </div>
               </div>
             </div>
           </div>

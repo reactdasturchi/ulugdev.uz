@@ -293,17 +293,17 @@ export function MobileDev() {
             </div>
 
             {/* Features */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 min-[400px]:grid-cols-2 gap-4">
               {features.map((feature) => (
                 <div
                   key={feature.title}
-                  className="group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-4 backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/30 hover:bg-cyan-500/5"
+                  className="group rounded-2xl border border-zinc-800 bg-zinc-900/30 p-4 sm:p-5 backdrop-blur-sm transition-all duration-300 hover:border-cyan-500/30 hover:bg-cyan-500/5 min-h-[120px] flex flex-col"
                 >
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400">
-                    <feature.icon className="h-5 w-5" />
+                  <div className="mb-3 flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 shrink-0">
+                    <feature.icon className="h-6 w-6 sm:h-6 sm:w-6" />
                   </div>
-                  <h4 className="font-semibold text-white">{feature.title}</h4>
-                  <p className="mt-1 text-xs text-zinc-400">{feature.description}</p>
+                  <h4 className="font-semibold text-white text-sm sm:text-base">{feature.title}</h4>
+                  <p className="mt-1 text-xs sm:text-sm text-zinc-400 flex-1">{feature.description}</p>
                 </div>
               ))}
             </div>
